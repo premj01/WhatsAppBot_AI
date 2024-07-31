@@ -1,6 +1,11 @@
 const qrcode = require('qrcode-terminal')
 const { Client, LocalAuth , Buttons } = require('whatsapp-web.js');
 const cron = require('node-cron');
+const express = require('express')
+const app = express();
+const port = 8888;
+
+
 
 require('dotenv').config()
 const {AI_TEXT_GENERATION} = require('./ai')
@@ -13,7 +18,7 @@ const client = new Client(
 
 cron.schedule('*/10 * * * *', () => {
     // Replace 'yoursite.onrender.com' with your actual server URL
-    ping.sys.probe('yoursite.onrender.com');
+    ping.sys.probe('');
 });
 
 client.on('qr', (qr) => {
@@ -41,3 +46,10 @@ client.on('message', async (msg) => {
 });
 client.initialize();
 
+app.get('/', (req, res) => {
+    res.send('Hello, Express!'); // Replace with your desired response
+});
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
