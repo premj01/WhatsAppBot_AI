@@ -1,5 +1,7 @@
 const qrcode = require('qrcode-terminal')
 const { Client, LocalAuth , Buttons } = require('whatsapp-web.js');
+const cron = require('node-cron');
+
 require('dotenv').config()
 const {AI_TEXT_GENERATION} = require('./ai')
 
@@ -8,6 +10,11 @@ const client = new Client(
         authStrategy: new LocalAuth()
     }
 );
+
+cron.schedule('*/10 * * * *', () => {
+    // Replace 'yoursite.onrender.com' with your actual server URL
+    ping.sys.probe('yoursite.onrender.com');
+});
 
 client.on('qr', (qr) => {
     // Generate and scan this code with your phone
